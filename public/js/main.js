@@ -85,20 +85,30 @@ $(function initializeMap () {
       )
     })
 
-  $.ajax({
-    method: 'GET',
-    url: '/api/days'
-  })
-  .then(function(daysData){
-    console.log(daysData);
-  })
-  .catch();
+  // $.ajax({
+  //   method: 'GET',
+  //   url: '/api/day/1'
+  // })
+  // .then(function(daysData){
+  //   console.log(daysData);
+  // })
+  // .catch();
+
+
+//   $.ajax({
+// method: 'POST',
+// url: '/api/days'
+// })
+// .then(function (data) { console.log('POST response data: ', data) })
+// .catch(console.error.bind(console));
 
   // 2. Wire up the add buttons
   // We could do this if we wanted to select by the add
   // dataset item instead:
   //
   //   $('button[data-action="add"]').click(
+
+
   $('button.add').click(
     evt =>
       $(evt.target.dataset.from)
@@ -178,8 +188,28 @@ $(function initializeMap () {
     })
 
   // When we start, add a day
-  $('button.addDay').click()
+  // When we start, add all days in db to page
+    $.ajax({
+    method: 'GET',
+    url: '/api/days'
+  })
+  .then(function(daysData){
+    daysData.forEach(function(day){
+      $('button.addDay').click()
+    });
+  })
+  .catch();
 
+  //put request adds row to db
+  $.ajax({
+    method: 'PUT',
+    url: '/api/days/1/activity',
+    data: {id: 6}
+  })
+  .then(function(daysData){
+    console.log(daysData);
+  })
+  .catch();
 
 
 });
